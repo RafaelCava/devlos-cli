@@ -20,7 +20,7 @@
   <img alt="Github stars" src="https://img.shields.io/github/stars/RafaelCava/devlos-cli?color=56BEB8" />
 </p>
 
-Status
+<!-- Status -->
 
 <h4 align="center"> 
 	🚧  Devlos Cli 🚀 Em construção...  🚧
