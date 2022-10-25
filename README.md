@@ -47,7 +47,11 @@ Projeto criado para melhorar a experiência dos desenvolvedores, durante o desen
 ## :sparkles: Funcionalidades ##
 
 :heavy_check_mark: Funcionalidade 1: Inicia o ambiente de desenvolvimento\
-:heavy_check_mark: Funcionalidade 2: Finaliza o ambiente de desenvolvimento
+:heavy_check_mark: Funcionalidade 2: Finaliza o ambiente de desenvolvimento\
+:x: Funcionalidade 3: Busca dados de um ticket informado\
+:x: Funcionalidade 4: Cria tasks no JIRA\
+:x: Funcionalidade 5: Edita tasks no JIRA\
+:x: Funcionalidade 6: Deleta tasks no JIRA\
 ## :rocket: Tecnologias ##
 
 As seguintes ferramentas foram usadas na construção do projeto:
