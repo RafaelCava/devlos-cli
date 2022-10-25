@@ -89,6 +89,8 @@ Este projeto está sob licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais
 
 Feito com :heart: por <a href="https://github.com/RafaelCava" target="_blank">Rafael Cavalcante</a>
 
+Deixe a sua :star:
+
 &#xa0;
 
 <a href="#top">Voltar para o topo</a>
