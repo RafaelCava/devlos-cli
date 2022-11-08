@@ -5,6 +5,9 @@ package cmd
 
 import (
 	"fmt"
+	"log"
+	"os/exec"
+	"strings"
 
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/spf13/cobra"
@@ -19,15 +22,41 @@ var startdevCmd = &cobra.Command{
 	Utilizar previamente o comando de configuração da CLI`,
 	Run: func(cmd *cobra.Command, args []string) {
 		services := []string{}
-		options := []string{"Megasac-api", "Broadcast-api", "Tallos-chat", "Tallos-SSO"}
+		options := SearchProjects()
 		prompt := &survey.MultiSelect{
 			Message: "Quais serviços você deseja utilizar ?",
 			Options: options,
 		}
 		survey.AskOne(prompt, &services)
-		fmt.Println(options)
-		fmt.Println(services)
+		for i := 0; i < len(services); i++ {
+			err := StartProject(services[i])
+			if err != nil {
+				log.Fatal(err)
+			}
+			fmt.Printf("Projeto %s iniciado com sucesso\n", services[i])
+		}
 	},
+}
+
+var WORKDIR = "/home/tallos/Documentos/develop/tallos/"
+
+func SearchProjects() []string {
+	out, err := exec.Command("ls", WORKDIR).Output()
+	if err != nil {
+		log.Fatal(err)
+	}
+	format := string(out)
+	newFormat := strings.Split(format, "\n")
+	newFormat = newFormat[:len(newFormat)-1]
+	return newFormat
+}
+
+func StartProject(project string) error {
+	_, err := exec.Command("docker", "compose", "-f", WORKDIR+project+"/docker-compose.yml", "up", "-d").Output()
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func init() {
