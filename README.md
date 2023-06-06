@@ -79,7 +79,7 @@ $ cd devlos-cli
 $ GOFLAGS=-mod=mod go build -o /bin/devlos-cli main.go
 
 # Caso deseje utilizar o docker para buildar a CLI
-$ docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp golang:1.19 go build -v
+$ docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp golang:1.19 go build -buildvcs=false 
 $ sudo mv ./devlos-cli /bin/
 ```
 
