@@ -75,6 +75,9 @@ $ git clone https://github.com/RafaelCava/devlos-cli
 # Entre na pasta
 $ cd devlos-cli
 
+# Configure no seu arquivo .zshrc ou .bashrc a variável de ambiente PATH_TALLOS apontando para o diretório onde esta os repositórios da tallos.
+# É muito importante não mudar o nome dos diretórios da tallos para manter o padrão atual, a cli esta seguindo esse padrão e não fará nada além dele.
+
 # Build a CLI
 $ GOFLAGS=-mod=mod go build -o /bin/devlos-cli main.go
 
