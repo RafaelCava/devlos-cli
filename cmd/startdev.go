@@ -6,6 +6,7 @@ package cmd
 import (
 	"fmt"
 	"log"
+	"os"
 	"os/exec"
 	"strings"
 
@@ -38,11 +39,12 @@ var startdevCmd = &cobra.Command{
 	},
 }
 
-var WORKDIR = "/home/tallos/Documentos/develop/tallos/"
+var WORKDIR = os.Getenv("PATH_TALLOS")
 
 func SearchProjects() []string {
 	out, err := exec.Command("ls", WORKDIR).Output()
 	if err != nil {
+		fmt.Println("Erro ao executar o comando 'ls':", err)
 		log.Fatal(err)
 	}
 	format := string(out)
