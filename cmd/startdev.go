@@ -8,6 +8,7 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"regexp"
 	"strings"
 
 	"github.com/AlecAivazis/survey/v2"
@@ -50,15 +51,49 @@ func SearchProjects() []string {
 	format := string(out)
 	newFormat := strings.Split(format, "\n")
 	newFormat = newFormat[:len(newFormat)-1]
+	newFormat = FindServices(newFormat, "-parent")
 	return newFormat
 }
 
 func StartProject(project string) error {
-	_, err := exec.Command("docker", "compose", "-f", WORKDIR+project+"/docker-compose.yml", "up", "-d").Output()
-	if err != nil {
-		return err
+	format := strings.Split(project, " ")
+	if len(format) > 1 {
+		_, err := exec.Command("docker", "compose", "-f", WORKDIR+"/"+format[1]+"/docker-compose.yml", "up", "-d", format[0]).Output()
+		if err != nil {
+			return err
+		}
+		return nil
+	} else {
+		_, err := exec.Command("docker", "compose", "-f", WORKDIR+"/"+project+"/docker-compose.yml", "up", "-d").Output()
+		if err != nil {
+			return err
+		}
+		return nil
 	}
-	return nil
+}
+
+func FindServices(arr []string, regexPattern string) []string {
+	var services []string
+	regex := regexp.MustCompile(regexPattern)
+	for _, item := range arr {
+		if !regex.MatchString(item) {
+			services = append(services, item)
+		} else {
+			out, err := exec.Command("docker", "compose", "-f", WORKDIR+"/"+item+"/docker-compose.yml", "config", "--services").Output()
+			if err != nil {
+				log.Fatal(err)
+			}
+			format := string(out)
+			formtWithParent := format + item
+			fmt.Println(item)
+			newFormat := strings.Split(formtWithParent, "\n")
+			newFormat = newFormat[:len(newFormat)-1]
+			for _, service := range newFormat {
+				services = append(services, service+" "+item)
+			}
+		}
+	}
+	return services
 }
 
 func init() {
