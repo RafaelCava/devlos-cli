@@ -10,8 +10,10 @@ import (
 	"os/exec"
 	"regexp"
 	"strings"
+	"time"
 
 	"github.com/AlecAivazis/survey/v2"
+	"github.com/briandowns/spinner"
 	"github.com/spf13/cobra"
 )
 
@@ -58,16 +60,22 @@ func SearchProjects() []string {
 func StartProject(project string) error {
 	format := strings.Split(project, " -> ")
 	if len(format) > 1 {
+		s := spinner.New(spinner.CharSets[11], 100*time.Millisecond)
+		s.Start()
 		_, err := exec.Command("docker", "compose", "-f", WORKDIR+"/"+format[1]+"/docker-compose.yml", "up", "-d", format[0]).Output()
 		if err != nil {
 			return err
 		}
+		s.Stop()
 		return nil
 	} else {
+		s := spinner.New(spinner.CharSets[11], 100*time.Millisecond)
+		s.Start()
 		_, err := exec.Command("docker", "compose", "-f", WORKDIR+"/"+project+"/docker-compose.yml", "up", "-d").Output()
 		if err != nil {
 			return err
 		}
+		s.Stop()
 		return nil
 	}
 }

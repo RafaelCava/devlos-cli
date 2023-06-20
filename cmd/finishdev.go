@@ -8,8 +8,10 @@ import (
 	"log"
 	"os/exec"
 	"strings"
+	"time"
 
 	"github.com/AlecAivazis/survey/v2"
+	"github.com/briandowns/spinner"
 	"github.com/spf13/cobra"
 )
 
@@ -55,10 +57,13 @@ func FormatContainers(output []byte) []string {
 }
 
 func FinishContainer(container string) {
+	s := spinner.New(spinner.CharSets[11], 100*time.Millisecond)
+	s.Start()
 	_, err := exec.Command("docker", "rm", "-f", container).Output()
 	if err != nil {
 		log.Fatal(err)
 	}
+	s.Stop()
 }
 
 func init() {
