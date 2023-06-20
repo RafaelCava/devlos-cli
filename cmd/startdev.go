@@ -56,7 +56,7 @@ func SearchProjects() []string {
 }
 
 func StartProject(project string) error {
-	format := strings.Split(project, " ")
+	format := strings.Split(project, " -> ")
 	if len(format) > 1 {
 		_, err := exec.Command("docker", "compose", "-f", WORKDIR+"/"+format[1]+"/docker-compose.yml", "up", "-d", format[0]).Output()
 		if err != nil {
@@ -85,11 +85,10 @@ func FindServices(arr []string, regexPattern string) []string {
 			}
 			format := string(out)
 			formtWithParent := format + item
-			fmt.Println(item)
 			newFormat := strings.Split(formtWithParent, "\n")
 			newFormat = newFormat[:len(newFormat)-1]
 			for _, service := range newFormat {
-				services = append(services, service+" "+item)
+				services = append(services, service+" -> "+item)
 			}
 		}
 	}
