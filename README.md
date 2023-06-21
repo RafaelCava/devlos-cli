@@ -86,6 +86,10 @@ $ docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp golang:1.19 go buil
 $ sudo mv ./devlos-cli /bin/
 ```
 
+<div align="center">
+  <img alt="Preview" src="./.github/assets/devlos-cli.png" />
+</div>
+
 ## :memo: Licença ##
 
 Este projeto está sob licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
