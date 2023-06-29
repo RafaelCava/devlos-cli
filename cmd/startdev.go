@@ -5,9 +5,11 @@ package cmd
 
 import (
 	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"regexp"
 	"strings"
 	"time"
@@ -50,11 +52,12 @@ func SearchProjects() []string {
 		fmt.Println("Erro ao executar o comando 'ls':", err)
 		log.Fatal(err)
 	}
-	format := string(out)
-	newFormat := strings.Split(format, "\n")
-	newFormat = newFormat[:len(newFormat)-1]
-	newFormat = FindServices(newFormat, "-parent")
-	return newFormat
+	directoriesStringfy := string(out)
+	newDirectoriesFormat := strings.Split(directoriesStringfy, "\n")
+	newDirectoriesFormat = newDirectoriesFormat[:len(newDirectoriesFormat)-1]
+	validDirectories := ValidateDir(newDirectoriesFormat)
+	services := FindServices(validDirectories, "-parent")
+	return services
 }
 
 func StartProject(project string) error {
@@ -101,6 +104,23 @@ func FindServices(arr []string, regexPattern string) []string {
 		}
 	}
 	return services
+}
+
+func ValidateDir(directories []string) []string {
+	var validDirectories []string
+	for _, directory := range directories {
+		files, err := ioutil.ReadDir(filepath.Join(WORKDIR, directory))
+		if err != nil {
+			log.Fatal(err)
+		}
+		for _, file := range files {
+			if !file.IsDir() && strings.HasPrefix(file.Name(), "docker-compose") {
+				validDirectories = append(validDirectories, directory)
+				break
+			}
+		}
+	}
+	return validDirectories
 }
 
 func init() {
