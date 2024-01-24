@@ -42,6 +42,7 @@ var startdevCmd = &cobra.Command{
 			fmt.Printf("Projeto %s iniciado com sucesso\n", services[i])
 		}
 	},
+	Aliases: []string{"up"},
 }
 
 var WORKDIR = os.Getenv("PATH_TALLOS")

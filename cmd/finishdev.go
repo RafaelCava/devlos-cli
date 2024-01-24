@@ -39,6 +39,7 @@ var finishdevCmd = &cobra.Command{
 			fmt.Printf("Container %s finalizado com sucesso\n", containersToRemove[i])
 		}
 	},
+	Aliases: []string{"down"},
 }
 
 func SearchContainerUp() []byte {
