@@ -96,8 +96,8 @@ func FindServices(arr []string, regexPattern string) []string {
 				log.Fatal(err)
 			}
 			format := string(out)
-			formtWithParent := format + item
-			newFormat := strings.Split(formtWithParent, "\n")
+			formatWithParent := format + item
+			newFormat := strings.Split(formatWithParent, "\n")
 			newFormat = newFormat[:len(newFormat)-1]
 			for _, service := range newFormat {
 				services = append(services, service+" -> "+item)
